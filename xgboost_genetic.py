@@ -20,14 +20,14 @@ np.random.seed(723)
 '''
 The dataset is from https://archive.ics.uci.edu/ml/machine-learning-databases/musk/
 It contains a set of 102 molecules, out of which 39 are identified by humans as 
-having odor that can be used in perfumery and 69 having not the desired odor.
+having odor that can be used in perfumery and 69 not having the desired odor.
 The dataset contains 6,590 low-energy conformations of these molecules, contianing 166 features.
 '''
 
 # Importing the dataset
 dataset = pd.read_csv('clean2.data', header=None)
 
-X = dataset.iloc[:, 2:168].values #discard first two coloums as these are molecule name and conformation name
+X = dataset.iloc[:, 2:168].values #discard first two coloums as these are molecule's name and conformation's name
 
 y = dataset.iloc[:, 168].values #extrtact last coloum as class (1 => desired odor, 0 => undesired odor)
 
@@ -71,7 +71,7 @@ fitnessHistory = np.empty([numberOfGenerations+1, numberOfParents])
 #define an array to store the value of each parameter for each parent and generation
 populationHistory = np.empty([(numberOfGenerations+1)*numberOfParents, numberOfParameters])
 
-#insert the value of initial parameters
+#insert the value of initial parameters to history
 populationHistory[0:numberOfParents, :] = population
 
 for generation in range(numberOfGenerations):
@@ -87,7 +87,7 @@ for generation in range(numberOfGenerations):
     #survival of the fittest - take the top parents, based on the fitness value and number of parents needed to be selected
     parents = geneticXGboost.new_parents_selection(population=population, fitness=fitnessValue, numParents=numberOfParentsMating)
     
-    #mate these parents to create chilren having parameters from these parents (we are using uniorm crossover)
+    #mate these parents to create children having parameters from these parents (we are using uniform crossover)
     children = geneticXGboost.crossover_uniform(parents=parents, childrenSize=(populationSize[0] - parents.shape[0], numberOfParameters))
     
     #add mutation to create genetic diversity
@@ -131,7 +131,7 @@ print('colsample_bytree', population[bestFitnessIndex][6])
 geneticXGboost.plot_parameters(numberOfGenerations, numberOfParents, fitnessHistory, "fitness (F1-score)")
 
 #Look at individual parameters change with generation
-#Create array for each parameter (Genration x Parents)
+#Create array for each parameter history (Genration x Parents)
 
 learnigRateHistory = populationHistory[:, 0].reshape([numberOfGenerations+1, numberOfParents])
 nEstimatorHistory = populationHistory[:, 1].reshape([numberOfGenerations+1, numberOfParents])

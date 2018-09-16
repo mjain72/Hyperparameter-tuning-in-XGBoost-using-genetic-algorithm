@@ -4,7 +4,6 @@
 @author: mohit jain
 """
 
-#create fitness function; will predict F1_score
 from sklearn.metrics import f1_score
 import numpy as np
 import random
@@ -36,7 +35,9 @@ def initilialize_poplulation(numberOfParents):
     
     population = np.concatenate((learningRate, nEstimators, maxDepth, minChildWeight, gammaValue, subSample, colSampleByTree), axis= 1)
     return population
-    
+
+
+#create fitness function that will predict F1_score    
 
 def fitness_f1score(y_true, y_pred):
     fitness = round((f1_score(y_true, y_pred, average='weighted')), 4)
@@ -77,7 +78,7 @@ def new_parents_selection(population, fitness, numParents):
     return selectedParents
         
 '''
-Mate these parents to create chilren having parameters from these parents (we are using uniorm crossover method)
+Mate these parents to create chilren having parameters from these parents (we are using uniform crossover method)
 '''
 def crossover_uniform(parents, childrenSize):
     
@@ -89,7 +90,7 @@ def crossover_uniform(parents, childrenSize):
     
     '''
     Create child by choosing parameters from two paraents selected using new_parent_selection function. The parameter values
-    will be picked from the indexs, which were randomly selected above. 
+    will be picked from the indexes, which were randomly selected above. 
     '''
     for i in range(childrenSize[0]):
         
@@ -105,7 +106,7 @@ def crossover_uniform(parents, childrenSize):
     
 '''
 Introduce some mutation in the children. In case of XGboost we will introdcue mutation randomly on each parameter one at a time,
-based on which parameter is selected at random. Initially, we will define the maximum value that is allowed for the parameter, to prevent the
+based on which parameter is selected at random. Initially, we will define the maximum/minimum value that is allowed for the parameter, to prevent the
 out the range error during runtime. Subsequently, we will generate mutation value and add it to the parameter, and return the mutated offspring!!!
 '''
 
@@ -153,7 +154,7 @@ def mutation(crossover, numberOfParameters):
 
 '''
 This function will allow us to genrate the heatmap for various parameters and fitness to visualize 
-how each paramter and fitness changes with each generation
+how each parameter and fitness changes with each generation
 '''
 
 def plot_parameters(numberOfGenerations, numberOfParents, parameter, parameterName):
