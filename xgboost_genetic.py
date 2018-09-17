@@ -11,7 +11,7 @@ We will use genetic algorithum to optimize hyperparameters for XGboost.
 # Importing the libraries
 import numpy as np
 import pandas as pd
-import geneticXGboost
+import geneticXGboost #genetic algorithum module
 import xgboost as xgb
 
 
