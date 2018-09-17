@@ -7,7 +7,6 @@
 '''
 We will use genetic algorithum to optimize hyperparameters for XGboost. 
 '''
-# Decision Tree Classification
 
 # Importing the libraries
 import numpy as np
